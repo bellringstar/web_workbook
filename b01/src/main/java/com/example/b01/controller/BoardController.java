@@ -1,11 +1,13 @@
 package com.example.b01.controller;
 
 import com.example.b01.dto.BoardDTO;
+import com.example.b01.dto.BoardListReplyCountDTO;
 import com.example.b01.dto.PageRequestDTO;
 import com.example.b01.dto.PageResponseDTO;
 import com.example.b01.service.BoardService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
+import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -27,7 +29,10 @@ public class BoardController {
     @GetMapping("/list")
     public void list(PageRequestDTO pageRequestDTO, Model model){
 
-        PageResponseDTO<BoardDTO> responseDTO = boardService.list(pageRequestDTO);
+//        PageResponseDTO<BoardDTO> responseDTO = boardService.list(pageRequestDTO);
+
+        PageResponseDTO<BoardListReplyCountDTO> responseDTO =
+                boardService.listWithReplyCount(pageRequestDTO);
 
         log.info(responseDTO);
 
@@ -108,5 +113,6 @@ public class BoardController {
 
         return "redirect:/board/list";
     }
+
 
 }
