@@ -1,3 +1,9 @@
+buildscript {
+	ext {
+		queryDslVersion = "5.0.0"
+	}
+}
+
 plugins {
 	id 'java'
 	id 'org.springframework.boot' version '2.7.14'
@@ -6,6 +12,8 @@ plugins {
 
 group = 'com.example'
 version = '0.0.1-SNAPSHOT'
+
+
 
 java {
 	sourceCompatibility = '17'
@@ -40,6 +48,30 @@ dependencies {
 	testImplementation 'org.springframework.security:spring-security-test'
 	testCompileOnly 'org.projectlombok:lombok:'
 	testAnnotationProcessor 'org.projectlombok:lombok'
+
+	//JSON 문자열 처리
+	implementation 'com.google.code.gson:gson:2.8.9'
+
+	//JWT
+	implementation 'io.jsonwebtoken:jjwt:0.9.1'
+
+	//Querydsl
+
+	implementation "com.querydsl:querydsl-jpa:${queryDslVersion}"
+
+	annotationProcessor(
+			'javax.persistence:javax.persistence-api',
+			'javax.annotation:javax.annotation-api',
+			"com.querydsl:querydsl-apt:${queryDslVersion}:jpa"
+	)
+}
+
+sourceSets {
+	main {
+		java {
+			srcDirs = ["$projectDir/src/main/java", "$projectDir/build/generated"]
+		}
+	}
 }
 
 tasks.named('test') {
